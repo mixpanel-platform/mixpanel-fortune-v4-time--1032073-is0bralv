@@ -1,15 +1,341 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Marketing Dashboard</title>
+    <!--mixpanel platform -->
     <link rel="stylesheet" type="text/css" href="https://cdn.mxpnl.com/libs/mixpanel-platform/css/reset.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.css">
-    <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script>
-  </head>
-  <body class="mixpanel-platform-body">
-    <h1>Hello, World!</h1>
-    <script>
-      // Run queries and display results here
+    <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script> <!--/mixpanel platform -->
+
+    <!--tether for tooltips-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tether/1.3.1/js/tether.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript Bootstrap-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+
+    <!-- tablesorter plugin -->
+    <link rel="stylesheet" type="text/css" href="js/tablesorter-master/themes/blue/style.css">
+    <script type="text/javascript" src="js/tablesorter-master/jquery.tablesorter.js"></script>
+    <script type="text/javascript" src="js/tablesorter-master/jquery.tablesorter.widgets.js"></script>
+    <!-- tablesorter pager plugin -->
+    <link rel="stylesheet" type="text/css" href="js/tablesorter-master/addons/pager/jquery.tablesorter.pager.css">
+    <script type="text/javascript" src="js/tablesorter-master/addons/pager/jquery.tablesorter.pager.js"></script>
+    <!-- csv export source: http://www.jqueryscript.net/table/jQuery-Plugin-To-Convert-HTML-Table-To-CSV-tabletoCSV.html-->
+    <script src="js/jquery.tabletoCSV.js"></script>
+
+    <!--font awesome icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+
+    <!--custom styles-->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- initialize second lib so that we can track when a user changes campaign spend-->
+<!--     <script type="text/javascript">
+
+      mixpanel.init("63984281bbf4193be761f9f9ff8592a5", {}, "client_project");
     </script>
+  -->
+  </head>
+
+  <body class="mixpanel-platform-body">
+    <div class="container-fluid" id='pannel-container'>
+      <div class="row">
+          <div class="col-sm-3 col-sm-6">
+              <div class="panel panel-mpblue">
+                  <div class="panel-heading">
+                      <div class="row">
+                          <div class="col-xs-3">
+                              <i class="fa fa-users fa-4x" aria-hidden="true"></i>
+                          </div>
+                          <div class="col-xs-9 text-right">
+                              <div class="huge" id="mau-header">0</div>
+                              <div class="panel-text">Monthly Active Users</div>
+                          </div>
+                      </div>
+                  </div>
+                  <a href="#">
+                      <div class="panel-footer panel-footer-dau">
+                          <span class="pull-left">View Details</span>
+                          <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                          <div class="clearfix"></div>
+                      </div>
+                  </a>
+              </div>
+          </div>
+          <div class="col-sm-3 col-sm-6">
+              <div class="panel panel-mpblue">
+                  <div class="panel-heading">
+                      <div class="row">
+                          <div class="col-xs-3">
+                              <i class="fa fa-book fa-4x" aria-hidden="true"></i>
+                          </div>
+                          <div class="col-xs-9 text-right">
+                              <div class="huge" id="articles-today-header">5,523</div>
+                              <div class="panel-text">Articles Read Today</div>
+                          </div>
+                      </div>
+                  </div>
+                  <a href="#">
+                      <div class="panel-footer panel-footer-mau">
+                          <span class="pull-left">View Details</span>
+                          <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                          <div class="clearfix"></div>
+                      </div>
+                  </a>
+              </div>
+          </div>
+          <div class="col-sm-3 col-sm-6">
+              <div class="panel panel-mpblue">
+                  <div class="panel-heading">
+                      <div class="row">
+                          <div class="col-xs-3">
+                              <i class="fa fa-youtube-play fa-4x"></i>
+                          </div>
+                          <div class="col-xs-9 text-right">
+                              <div class="huge" id="videos-today-header">1,622</div>
+                              <div class="panel-text">Videos Viewed Today</div>
+                          </div>
+                      </div>
+                  </div>
+                  <a href="#">
+                      <div class="panel-footer panel-footer-revenue">
+                          <span class="pull-left">View Details</span>
+                          <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                          <div class="clearfix"></div>
+                      </div>
+                  </a>
+              </div>
+          </div>
+          <div class="col-sm-3 col-sm-6">
+              <div class="panel panel-mpblue">
+                  <div class="panel-heading">
+                      <div class="row">
+                          <div class="col-xs-3">
+                              <i class="fa fa-clock-o fa-4x" aria-hidden="true"></i>
+                          </div>
+                          <div class="col-xs-9 text-right">
+                              <div class="huge" id="hours-spend-today-header">11,235,00</div>
+                              <div class="panel-text">Time Spend On Articles (Hrs)</div>
+                          </div>
+                      </div>
+                  </div>
+                  <a href="#">
+                      <div class="panel-footer panel-footer-avg-events">
+                          <span class="pull-left">View Details</span>
+                          <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                          <div class="clearfix"></div>
+                      </div>
+                  </a>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="container-fluid p-t-2" id='tables-and-charts'>
+      <div class='row' id='headers'>
+        <div class="col-sm-6">
+          <h4 class="text-center  text-muted" id="dau-chart-header" style="display: none"><u>Daily Active Users</u></h4>
+        </div>
+        <div class="col-sm-6">
+          <h4 class="text-center text-muted" id="mau-chart-header" style="display: none"><u>Monthly Active Users</u></h4>
+        </div>
+      </div>
+      <div class='row'>
+        <div class="col-sm-6">
+          <div id='dau-chart'></div>
+        </div>
+        <div class="col-sm-6">
+          <div id='mau-chart'></div>
+        </div>
+      </div>
+      <div class='row' id='headers'>
+        <div class="col-sm-6">
+          <h4 class="text-center text-muted" id="trending-time-spent-header" style="display: none;"><u>Trending Hours Read Per Day</u></h4>
+        </div>
+        <div class="col-sm-6">
+          <h4 class="text-center text-muted" id="trending-article-count-header" style="display: none"><u>Trending Count of Articles Read</u></h4>
+        </div>
+      </div>
+      <div class='row'>
+        <div class="col-sm-6">
+          <div id='trending-time-spent-chart'></div>
+        </div>
+        <div class="col-sm-6">
+          <div id='trending-article-chart'></div>
+        </div>
+      </div>
+      <div class='row' id='headers'>
+        <div class="col-sm-6">
+          <h4 class="text-center text-muted" id="time-spent-header" style="display: none;"><u>Top Articles by Total Hours Spent</u></h4>
+        </div>
+        <div class="col-sm-6">
+          <h4 class="text-center text-muted" id="avg-time-spent-header" style="display: none"><u>Top Articles by Avg Minutes Spent</u></h4>
+        </div>
+      </div>
+      <div class='row'>
+        <div class="col-sm-6">
+          <div id='time-spent-chart'></div>
+        </div>
+        <div class="col-sm-6">
+          <div id='avg-time-spent-chart'></div>
+        </div>
+      </div>
+      <div class="row" id="headers">
+          <div class="col-sm-12">
+            <h4 class="text-center text-muted" id="bounce-rate-header"><u>Article to Article Conversion</u></h4>
+          </div>
+          <div class="col-sm-12">
+            <h5 class="text-center text-muted" id="bounce-rate-header">Which articles drove to other article reads?</h4>
+          </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div id='campaign-bounce-rate'></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 m-t-2">
+        <button type="button" name="button" class="mp-button" id="save-all">Save</button>
+      </div>
+    </div>
+    <!-- space for some global variables -->
+    <script type="text/javascript">
+      //set a global object to store all graphing data to be sent later
+      var savedData = {}
+      //global var to store entered campaign spend from marketing table
+      var campaignAmount
+      //global var to store campaign being edited from marketing table
+      var campaignEdited
+      //global for store data that needs to be saved
+      var queuedDataForSaving =[]
+      //global placeholder to push changes into queuedDataForSaving array
+      var changeDetails
+    </script>
+    <!-- enable saving of the dashboard-->
+    <script type="text/javascript" src="js/saveAll.js"></script>
+    <!-- enable linking out to mixpanel reports -->
+    <script type="text/javascript" src="js/linkOuts.js"></script>
+    <!-- helper functions includes addCommas, and graphValues-->
+    <script type="text/javascript" src="js/helperFunctions.js"></script>
+    <!-- web only top events query jql -->
+    <script id="jql-top-web-events">
+      var d = new Date();
+      d.setMonth(d.getMonth() - 1);
+      var aMonthAgo = new Date(d).toISOString().split("T")[0]
+      var today = new Date().toISOString().split("T")[0]
+
+      function main() {
+        return Events({
+          from_date: aMonthAgo,
+          to_date:   today
+        })
+        .filter(function(item){
+          if(item.properties.mp_lib === 'web'){
+            return item
+          }
+        })
+        .groupBy(["name"], mixpanel.reducer.count())
+        .reduce(mixpanel.reducer.top(5));
+      }
+    </script>
+    <!-- dau jql script -->
+    <script id="jql-dau-active-users">
+      /* ========================================================
+       * Monthly active users
+       * How many users sent any event in a given month?
+       */
+      var today = Math.round(new Date().getTime())
+      var date = new Date().toISOString().split('T')[0]
+
+      var d = new Date();
+      d.setMonth(d.getMonth() - 1);
+      var aMonthAgo = new Date(d).toISOString().split("T")[0]
+      params = {
+        "startDate":aMonthAgo,
+        "endDate": date
+      }
+
+      function main() {
+        return Events({
+          from_date: params.startDate,
+          to_date: params.endDate
+        })
+        // group each user's events by the day they were triggered,
+        // and count how many events they sent each day
+        .groupByUser([getDay], function(count, events) {
+          count = count || 0;
+          return count + events.length;
+        })
+        //filter out days where a user sent < 2 events
+        .filter(function(user_count) {
+          return user_count.value >= 2;
+        })
+        .groupBy(["key.1"], mixpanel.reducer.count());
+      }
+
+      function getDay(event) {
+        return new Date(event.time).toISOString().substr(0, 10);
+      }
+    </script>
+    <!-- jql script for MAU this month, used in marketingTable.js -->
+    <script id="monthly-active-users">
+      /* ========================================================
+       * Monthly active users
+       * How many users sent 2 or more events in a given month?
+       */
+
+      var today = new Date().toISOString().split('T')[0]
+
+      var a = new Date();
+      var sixMonths = new Date(a.getFullYear(), a.getMonth()-5, 1).toISOString().split('T')[0];
+      params = {
+        "startDate":sixMonths,
+        "endDate": today
+      }
+
+      function main() {
+        return Events({
+          from_date: params.startDate,
+          to_date: params.endDate
+        })
+        // group each user's events by the day they were triggered,
+        // and count how many events they sent each day
+        .groupByUser([getMonth], function(count, events) {
+          count = count || 0;
+          return count + events.length;
+        })
+        //filter out days where a user sent < 2 events
+        .filter(function(user_count) {
+          return user_count.value >= 2;
+        })
+        .groupBy(["key.1"], mixpanel.reducer.count());
+      }
+
+      function getMonth(event) {
+        return new Date(event.time).toISOString().substr(0, 7);
+      }
+    </script>
+    <!-- dua graphing-->
+    <script type="text/javascript" src="js/dauGraphing.js"></script>
+    <!-- mau graphing -->
+    <script type="text/javascript" src="js/mauGraphing.js"></script>
+    <!-- link to enable changing of events in table -->
+    <script type="text/javascript" src="js/tableEdit.js"></script>
+    <!-- bounce rates by campaign graphing-->
+    <script type="text/javascript" src="js/bounceRatesByCampaign.js"></script>
+    <!-- bounce rates by campaign graphing-->
+    <script type="text/javascript" src="js/articleDuration.js"></script>
+    <script type="text/javascript" src="js/trending.js"></script>
   </body>
 </html>
